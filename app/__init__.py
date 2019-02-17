@@ -8,12 +8,13 @@ ttt_app = Flask(__name__)
 
 @ttt_app.route('/ttt', methods=['POST', 'GET'])
 def index():
+    date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
     if request.method == 'POST':
-        name = request.form['name']
-        date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
+        name = request.form['Name']
+
         return render_template('hw1.html', name=name, date=date)
     else:
-        return render_template('hw1.html')
+        return render_template('hw1.html', name=None, date=date)
 
 if __name__ == '__main__':
    ttt_app.run(debug = True)
