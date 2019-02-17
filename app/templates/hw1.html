@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="tictactoe.css">
     </head>
    <body>
-       <form action="/" method="post">
+       <form action="{{ url_for('templates') }}" method="post">
           {% if name %}
             <p>Hello {{ name }}, {{ date }}!</p>
           {% endif %}
