@@ -7,9 +7,8 @@ ttt_bp = Blueprint("ttt", __name__)
 def login():
     if request.method == 'POST':
         name = request.form['name']
-        # date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
-        # return redirect(url_for('success',name=name))
-        return render_template('hw1.html', name=name)
+        date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
+        return render_template('hw1.html', name=name, date=date)
     else:
         return render_template('hw1.html')
 
