@@ -4,12 +4,12 @@
         <link rel="stylesheet" href="tictactoe.css">
     </head>
    <body>
-       <form action="{{ url_for('templates') }}" method="post">
-          {% if name %}
-            <p>Hello {{ name }}, {{ date }}!</p>
-          {% endif %}
+       <form method="post">
          <p>Name <input type = "text" name = "Name" /></p>
          <p><input type = "submit" value = "submit" /></p>
+           {% if name and date %}
+            <p>Hello {{ name }}, {{ date }}!</p>
+          {% endif %}
       </form>
    </body>
 </html>
