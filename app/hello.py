@@ -6,7 +6,7 @@ app = Flask(__name__)
 #def success(name):
 #    return "Hello " + name + "," + time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
 
-@app.route('/', methods = ['POST'])
+@app.route('/', methods = ['POST'], url_prefix='/ttt')
 def login():
    if request.method == 'POST':
       name = request.form['name']
