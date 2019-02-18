@@ -1,4 +1,4 @@
-from ttt_app import app
+from app import ttt_app
 
 if __name__ == "__main__":
-    app.run()
+    ttt_app.run()
