@@ -17,4 +17,4 @@ def index():
         return render_template('hw1.html', name=None, date=date)
 
 if __name__ == '__main__':
-   ttt_app.run(debug = True)
+   ttt_app.run(debug = True, host='0.0.0.0', port=80)
