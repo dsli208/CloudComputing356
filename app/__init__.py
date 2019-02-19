@@ -15,7 +15,7 @@ def index():
     if request.method == 'POST':
         name = request.form['Name']
 
-        return render_template('hw1play.html', name=name, date=date)
+        return render_template('hw1.html', name=name, date=date)
     else:
         return render_template('hw1.html', name=None, date=date)
 
@@ -25,7 +25,7 @@ def get_board():
     if request.method == 'POST':
         name = request.form['Name']
 
-        return render_template('hw1play.html', name=name, date=date)
+        return render_template('hw1.html', name=name, date=date)
     else:
         return render_template('hw1.html', name=None, date=date)
 

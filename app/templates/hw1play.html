@@ -5,7 +5,49 @@
     </head>
    <body>
        {% if name %}
-            <p>Hello {{ name }}, {{ date }}!</p>
+            <h1>Hello {{ name }}, {{ date }}!</h1>
+
+
+            <table style="width:100%" border="1">
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            </table>
+
+            <script>
+                function tableCreate() {
+                    var body = document.getElementsByTagName('body')[0];
+                    var tbl = document.createElement('table');
+                    tbl.style.width = '100%';
+                    tbl.setAttribute('border', '1');
+                    var tbdy = document.createElement('tbody');
+                    for (var i = 0; i < 3; i++) {
+                        var tr = document.createElement('tr');
+                        for (var j = 0; j < 3; j++) {
+
+                                var td = document.createElement('td');
+                                td.appendChild(document.createTextNode('\u0020'))
+                                tr.appendChild(td);
+
+                        }
+                        tbdy.appendChild(tr);
+                    }
+                    tbl.appendChild(tbdy);
+                    body.appendChild(tbl)
+                }
+            </script>
        {% endif %}
    </body>
 </html>
