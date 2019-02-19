@@ -8,7 +8,7 @@ ttt_app = Flask(__name__)
 ttt_props = {"grid": [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}
 
 # ttt_app.register_blueprint(ttt_bp, url_prefix='/ttt')
-
+@ttt_app.route('/', methods=['POST', 'GET'])
 @ttt_app.route('/ttt', methods=['POST', 'GET'])
 def index():
     date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
