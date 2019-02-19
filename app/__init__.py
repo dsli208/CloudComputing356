@@ -15,7 +15,7 @@ def index():
     if request.method == 'POST':
         name = request.form['Name']
 
-        return render_template('hw1.html', name=name, date=date)
+        return render_template('hw1play.html', name=name, date=date)
     else:
         return render_template('hw1.html', name=None, date=date)
 
@@ -24,11 +24,14 @@ def get_board():
     return jsonify(ttt_props)
 
 class Game(Resource):
-    def get(self, name):
+    def get(self, player, space):
         pass
 
-    def post(self, name):
-        pass
+    def post(self, player, space):
+        if ttt_props['grid'][space] == ' ':
+            ttt_props['grid'][space] = player
+        else:
+            pass
 
     def put(self, name):
         pass

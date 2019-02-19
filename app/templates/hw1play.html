@@ -4,14 +4,8 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tictactoe.css') }}">
     </head>
    <body>
-       <form action="{{ url_for('index') }}" method="post">
-         <p>Name <input type = "text" name = "Name" /></p>
-         <p><input type = "submit" value = "submit" /></p>
-           {% if name %}
+       {% if name %}
             <p>Hello {{ name }}, {{ date }}!</p>
-
-
-          {% endif %}
-      </form>
+       {% endif %}
    </body>
 </html>
