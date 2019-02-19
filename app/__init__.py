@@ -21,7 +21,13 @@ def index():
 
 @ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 def get_board():
-    return jsonify(ttt_props)
+    date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
+    if request.method == 'POST':
+        name = request.form['Name']
+
+        return render_template('hw1play.html', name=name, date=date)
+    else:
+        return render_template('hw1.html', name=None, date=date)
 
 class Game(Resource):
     def get(self, player, space):
