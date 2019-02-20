@@ -29,6 +29,7 @@
             </tr>
             </table>
 
+
            <script>
                 function update_board(id) {
                     console.log(id);
@@ -46,17 +47,22 @@
                         }
                     });
 
-                    get_board();
                 }
                 function get_board() {
-                    {% if grid %}
                     var props = JSON.parse('{{ grid }}');
                     for (i = 0; i < 9; i++) {
                         buttonid = i + "";
                         button = document.getElementById(buttonid);
                         button.value = grid['grid'][i];
                     }
-                    {% endif %}
+
+                    if (grid['winner'] === 'X'){
+
+                    }
+                    else if (grid['winner'] === 'O') {
+                        
+                    }
+
                 }
 
             </script>

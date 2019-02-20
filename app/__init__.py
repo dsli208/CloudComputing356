@@ -1,5 +1,7 @@
 from random import randint
 import json
+from typing import Dict, List, Union
+
 from flask import Flask, render_template, request, url_for, jsonify
 import time
 from flask_restful import Api, Resource, reqparse
@@ -8,6 +10,11 @@ ttt_app = Flask(__name__)
 username = ""
 date = ""
 ttt_props = {"grid": [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}
+
+def props_clear():
+    global ttt_props
+    ttt_props = {"grid": [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}
+    print(ttt_props)
 
 def computer_play():
     space = randint(0, 8)
@@ -41,12 +48,12 @@ def is_winner(player):
 @ttt_app.route('/ttt', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/', methods=['POST', 'GET'])
 def index():
+    props_clear()
     date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime())
     if request.method == 'POST':
         name = request.form['Name']
         username = name
         ttt_grid = json.dumps(ttt_props)
-        # r = requests.post("hw1.html", data=ttt_props)
         return render_template('hw1.html', name=name, date=date, winner=None, board=ttt_grid)
     else:
         ttt_grid = json.dumps(ttt_props)
