@@ -51,7 +51,7 @@ def index():
     props_clear()
     date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime())
     if request.method == 'POST':
-        name = request.form['Name']
+        name = request.form['name']
         username = name
         ttt_grid = json.dumps(ttt_props)
         return render_template('hw1.html', name=name, date=date, winner=None, board=ttt_grid)
