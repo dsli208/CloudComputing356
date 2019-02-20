@@ -2,40 +2,70 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tictactoe.css') }}">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     </head>
    <body>
-       <form action="{{ url_for('index') }}" method="post">
+
            {% if name %}
             <h1>Hello {{ name }}, {{ date }}!</h1>
 
 
             <table style="width:100%" border="1">
+
             <tr>
-                <td> <div id="t1"><button></button> </div></td>
-                <td> <div id="t2"><button></button> </div> </td>
-                <td> <div id="t3"><button></button> </div> </td>
+                <td> <div><button id="0" onclick="update_board(id)"></button> </div></td>
+                <td> <div><button id="1" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="2" onclick="update_board(id)"></button> </div> </td>
             </tr>
             <tr>
-                <td> <div id="t4"><button></button> </div> </td>
-                <td> <div id="t5"><button></button> </div> </td>
-                <td> <div id="t6"><button></button> </div> </td>
+                <td> <div><button id="3" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="4" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="5" onclick="update_board(id)"></button> </div> </td>
             </tr>
             <tr>
-                <td> <div id="t7"><button></button> </div> </td>
-                <td> <div id="t8"><button></button> </div> </td>
-                <td> <div id="t9"><button></button> </div> </td>
+                <td> <div><button id="6" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="7" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="8" onclick="update_board(id)"></button> </div> </td>
             </tr>
             </table>
 
-            <script>
-                function() {
+           <script>
+                function update_board(id) {
+                    console.log(id);
 
+                    $.ajax({
+                        url: '/ttt/play/',
+                        type: 'POST',
+                        data: JSON.stringify({"grid_id": id}),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            alert(response.status);
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+
+                    get_board();
                 }
+                function get_board() {
+                    {% if grid %}
+                    var props = JSON.parse('{{ grid }}');
+                    for (i = 0; i < 9; i++) {
+                        buttonid = i + "";
+                        button = document.getElementById(buttonid);
+                        button.value = grid['grid'][i];
+                    }
+                    {% endif %}
+                }
+
             </script>
            {% else %}
+        <form action="{{ url_for('index') }}" method="post">
            <p>Name <input type = "text" name = "Name" /></p>
             <p><input type = "submit" value = "submit" /></p>
+            </form>
           {% endif %}
-      </form>
+
    </body>
 </html>

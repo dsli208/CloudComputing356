@@ -1,8 +1,8 @@
 from random import randint
+import json
 from flask import Flask, render_template, request, url_for, jsonify
 import time
 from flask_restful import Api, Resource, reqparse
-# from app.ttt_bp import ttt_bp
 
 ttt_app = Flask(__name__)
 username = ""
@@ -41,32 +41,45 @@ def is_winner(player):
 @ttt_app.route('/ttt', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/', methods=['POST', 'GET'])
 def index():
-    date = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
+    date = time.strftime("%Y-%m-%d %H:%M:%S +0000", time.gmtime())
     if request.method == 'POST':
         name = request.form['Name']
         username = name
-        return render_template('hw1.html', name=name, date=date, winner=None, grid=ttt_props)
+        ttt_grid = json.dumps(ttt_props)
+        # r = requests.post("hw1.html", data=ttt_props)
+        return render_template('hw1.html', name=name, date=date, winner=None, board=ttt_grid)
     else:
-        return render_template('hw1.html', name=None, date=None, winner=None, grid=ttt_props)
+        ttt_grid = json.dumps(ttt_props)
+        # r = requests.post("hw1.html", data=ttt_props)
+        return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid)
 
 @ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/play/', methods=['POST', 'GET'])
-def board(player, space):
+def board():
+    space = int(request.json['grid_id'])
     if request.method == 'POST':
         if ttt_props['grid'][space] == ' ':
-            ttt_props['grid'][space] = player
-            if is_winner(player):
-                ttt_props['winner'] = player
-                return render_template('hw1.html', name=username, date=date, winner=player, grid=ttt_props)
+            ttt_props['grid'][space] = 'X'
+            if is_winner('X'):
+                ttt_props['winner'] = 'X'
+                ttt_grid = json.dumps(ttt_props)
+                # r = requests.post("hw1.html", data=ttt_props)
+                return render_template('hw1.html', name=username, date=date, winner='X', grid=ttt_grid)
             else:
                 computer_play()
                 if is_winner('O'):
                     ttt_props['winner'] = 'O'
-                    return render_template('hw1.html', name=username, date=date, winner='O', grid=ttt_props)
+                    ttt_grid = json.dumps(ttt_props)
+                    # r = requests.post("hw1.html", data=ttt_props)
+                    return render_template('hw1.html', name=username, date=date, winner='O', grid=ttt_grid)
                 else:
-                    return render_template('hw1.html', name=username, date=date, winner=None, grid=ttt_props)
+                    ttt_grid = json.dumps(ttt_props)
+                    # r = requests.post("hw1.html", data=ttt_props)
+                    return render_template('hw1.html', name=username, date=date, winner=None, grid=ttt_grid)
         else:
-            pass
+            ttt_grid = json.dumps(ttt_props)
+            print(ttt_grid)
+            return render_template('hw1.html', name=username, date=date, winner=None, grid=ttt_grid)
 
 if __name__ == '__main__':
     ttt_app.run(debug=True)
