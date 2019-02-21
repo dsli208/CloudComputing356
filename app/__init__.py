@@ -63,6 +63,7 @@ def index():
 @ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/play/', methods=['POST', 'GET'])
 def board():
+    print(request.json)
     space = int(request.json['grid_id'])
     if request.method == 'POST':
         if ttt_props['grid'][space] == ' ':
