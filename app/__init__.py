@@ -52,13 +52,13 @@ def index():
         ttt_props['name'] = name
         ttt_props['date'] = date
         ttt_grid = json.dumps(ttt_props)
-        return render_template('hw1.html', name=ttt_props['name'], date=date, winner=None, board=ttt_grid)
+        return render_template('hw1.html', name=ttt_props['name'], date=date, winner=None, board=ttt_grid, getupdate=False)
     else:
         props_clear()
         print('GET request')
         ttt_grid = json.dumps(ttt_props)
         print(ttt_props)
-        return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid)
+        return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid, getupdate=False)
 
 @ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/play/', methods=['POST', 'GET'])
@@ -72,22 +72,22 @@ def board():
                 ttt_props['winner'] = 'X'
                 ttt_grid = json.dumps(ttt_props)
                 print(ttt_props)
-                return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', grid=ttt_grid)
+                return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', grid=ttt_grid, getupdate=True)
             else:
                 computer_play()
                 if is_winner('O'):
                     ttt_props['winner'] = 'O'
                     ttt_grid = json.dumps(ttt_props)
                     print(ttt_props)
-                    return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', grid=ttt_grid)
+                    return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', grid=ttt_grid, getupdate=True)
                 else:
                     ttt_grid = json.dumps(ttt_props)
                     print(ttt_props)
-                    return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, grid=ttt_grid)
+                    return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, grid=ttt_grid, getupdate=True)
         else:
             ttt_grid = json.dumps(ttt_props)
             print(ttt_grid)
-            return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, grid=ttt_grid)
+            return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, grid=ttt_grid, getupdate=False)
 
 if __name__ == '__main__':
     ttt_app.run(debug=True)
