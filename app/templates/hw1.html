@@ -7,6 +7,11 @@
    <body>
 
            {% if name %}
+
+           <script>
+               var name = '{{ name }}';
+               console.log(name);
+           </script>
             <h1>Hello {{ name }}, {{ date }}!</h1>
 
 
