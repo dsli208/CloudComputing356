@@ -41,19 +41,21 @@ def is_winner(player):
         return True
 
 # ttt_app.register_blueprint(ttt_bp, url_prefix='/ttt')
-@ttt_app.route('/', methods=['POST', 'GET'])
-@ttt_app.route('/ttt', methods=['POST', 'GET'])
-@ttt_app.route('/ttt/', methods=['POST', 'GET'])
+@ttt_app.route('/', methods=['GET'])
+@ttt_app.route('/ttt/', methods=['GET', 'POST'])
+@ttt_app.route('/ttt', methods=['GET', 'POST'])
 def index():
-    props_clear()
     date = time.strftime("%Y-%m-%d", time.gmtime())
     if request.method == 'POST':
+        print('POST request')
         name = request.form['name']
         ttt_props['name'] = name
         ttt_props['date'] = date
         ttt_grid = json.dumps(ttt_props)
-        return render_template('hw1.html', name=name, date=date, winner=None, board=ttt_grid)
+        return render_template('hw1.html', name=ttt_props['name'], date=date, winner=None, board=ttt_grid)
     else:
+        props_clear()
+        print('GET request')
         ttt_grid = json.dumps(ttt_props)
         print(ttt_props)
         return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid)
@@ -89,6 +91,7 @@ def board():
 if __name__ == '__main__':
     ttt_app.run(debug=True)
     #ttt_app.run(debug = True, host='0.0.0.0', port=80)
+
 
 #class Game(Resource):
 #    def is_winner(self):
