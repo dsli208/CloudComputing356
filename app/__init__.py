@@ -41,7 +41,7 @@ def is_winner(player):
         return True
 
 # ttt_app.register_blueprint(ttt_bp, url_prefix='/ttt')
-@ttt_app.route('/', methods=['GET'])
+@ttt_app.route('/', methods=['GET', 'POST'])
 @ttt_app.route('/ttt/', methods=['GET', 'POST'])
 @ttt_app.route('/ttt', methods=['GET', 'POST'])
 def index():
