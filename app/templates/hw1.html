@@ -96,11 +96,15 @@
 
                 function update_board(id) {
                     console.log(id);
+                    var props_str = JSON.stringify({{ board | tojson | safe}});
+                    console.log(props_str);
+                    var props = JSON.parse(JSON.parse(props_str));
 
+                    props.grid[id] = 'X';
                     $.ajax({
                         url: '{{ url_for('board') }}',
                         type: 'POST',
-                        data: JSON.stringify({"grid_id": id, "grid": [' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}),
+                        data: JSON.stringify({"grid_id": id, "grid": props.grid}),
                         dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {

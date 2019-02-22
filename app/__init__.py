@@ -77,39 +77,70 @@ def board():
     if request.method == 'POST':
         # print(request.json)
         space = int(request.json['grid_id'])
-        if ttt_props['grid'][space] == ' ':
-            ttt_props['grid'][space] = 'X'
-            if is_winner('X'):
-                ttt_props['winner'] = 'X'
-                ttt_grid = json.dumps(ttt_props)
-                # print(ttt_props)
-                jify = jsonify(ttt_props)
-                # print(jify)
-                return jify
-                #return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', board=ttt_grid, getupdate=True, id=move_id)
-            else:
-                computer_play()
-                if is_winner('O'):
-                    ttt_props['winner'] = 'O'
-                    ttt_grid = json.dumps(ttt_props)
-                    # print(ttt_props)
-                    jify = jsonify(ttt_props)
-                    # print(jify)
-                    return jify
-                    # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', board=ttt_grid, getupdate=True, id=move_id)
-                else:
-                    ttt_grid = json.dumps(ttt_props)
-                    # print(ttt_props)
-                    jify = jsonify(ttt_props)
-                    # print(jify)
-                    return jify
-                    # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=True, id=move_id)
-        else:
+
+        ttt_props['grid'] = request.json['grid']
+        if is_winner('X'):
+            ttt_props['winner'] = 'X'
             ttt_grid = json.dumps(ttt_props)
-            # print(ttt_grid)
+            print(ttt_props)
             jify = jsonify(ttt_props)
-            # print(jify)
+            print(jify)
             return jify
+        else:
+            computer_play()
+            if is_winner('O'):
+                ttt_props['winner'] = 'O'
+    #            ttt_grid = json.dumps(ttt_props)
+                print(ttt_props)
+                jify = jsonify(ttt_props)
+                print(jify)
+                return jify
+            else:
+                ttt_grid = json.dumps(ttt_props)
+                print(ttt_props)
+                jify = jsonify(ttt_props)
+                print(jify)
+                return jify
+    # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', board=ttt_grid, getupdate=True, id=move_id)
+    #        else:
+    #            ttt_grid = json.dumps(ttt_props)
+    # print(ttt_props)
+    #            jify = jsonify(ttt_props)
+    # print(jify)
+    #            return jify
+        # if ttt_props['grid'][space] == ' ':
+        #    ttt_props['grid'][space] = 'X'
+        #    if is_winner('X'):
+        #        ttt_props['winner'] = 'X'
+        #        ttt_grid = json.dumps(ttt_props)
+                # print(ttt_props)
+        #        jify = jsonify(ttt_props)
+                # print(jify)
+        #        return jify
+                #return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', board=ttt_grid, getupdate=True, id=move_id)
+        #    else:
+        #        computer_play()
+        #        if is_winner('O'):
+        #            ttt_props['winner'] = 'O'
+        #            ttt_grid = json.dumps(ttt_props)
+                    # print(ttt_props)
+        #            jify = jsonify(ttt_props)
+                    # print(jify)
+        #            return jify
+                    # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', board=ttt_grid, getupdate=True, id=move_id)
+        #        else:
+        #            ttt_grid = json.dumps(ttt_props)
+                    # print(ttt_props)
+        #            jify = jsonify(ttt_props)
+                    # print(jify)
+        #            return jify
+                    # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=True, id=move_id)
+        #else:
+        #    ttt_grid = json.dumps(ttt_props)
+            # print(ttt_grid)
+        #    jify = jsonify(ttt_props)
+            # print(jify)
+        #    return jify
             # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=False, id=move_id)
     else:
         ttt_grid = json.dumps(ttt_props)
@@ -122,41 +153,3 @@ def board():
 if __name__ == '__main__':
     ttt_app.run(debug=True)
     #ttt_app.run(debug = True, host='0.0.0.0', port=80)
-
-
-#class Game(Resource):
-#    def is_winner(self):
-        # Columns
-#        if ttt_props['grid'][0] == ttt_props['grid'][3] == ttt_props['grid'][6] == 'X' or ttt_props['grid'][0] == ttt_props['grid'][3] == ttt_props['grid'][6] == 'O':
-#            return True
-#        elif ttt_props['grid'][1] == ttt_props['grid'][4] == ttt_props['grid'][7] == 'X' or ttt_props['grid'][1] == ttt_props['grid'][4] == ttt_props['grid'][7] == 'O':
-#            return True
-#        elif ttt_props['grid'][2] == ttt_props['grid'][5] == ttt_props['grid'][8] == 'X' or ttt_props['grid'][2] == ttt_props['grid'][5] == ttt_props['grid'][8] == 'O':
-#            return True
-        # Rows
-#        elif ttt_props['grid'][0] == ttt_props['grid'][1] == ttt_props['grid'][2] == 'X' or ttt_props['grid'][0] == ttt_props['grid'][1] == ttt_props['grid'][2] == 'O':
-#            return True
-#        elif ttt_props['grid'][3] == ttt_props['grid'][4] == ttt_props['grid'][5] == 'X' or ttt_props['grid'][3] == ttt_props['grid'][4] == ttt_props['grid'][5] == 'O':
-#            return True
-#        elif ttt_props['grid'][6] == ttt_props['grid'][7] == ttt_props['grid'][8] == 'X' or ttt_props['grid'][6] == ttt_props['grid'][7] == ttt_props['grid'][8] == 'O':
-#            return True
-        # Diagonals
-#        elif ttt_props['grid'][0] == ttt_props['grid'][4] == ttt_props['grid'][8] == 'X' or ttt_props['grid'][0] == ttt_props['grid'][4] == ttt_props['grid'][8] == 'O':
-#            return True
-#        elif ttt_props['grid'][2] == ttt_props['grid'][4] == ttt_props['grid'][6] == 'X' or ttt_props['grid'][2] == ttt_props['grid'][4] == ttt_props['grid'][6] == 'O':
-#            return True
-
-#    def get(self, player, space):
-#        return jsonify(ttt_props)
-
-#    def post(self, player, space):
-#        if ttt_props['grid'][space] == ' ':
-#            ttt_props['grid'][space] = player
-#        else:
-#            pass
-
- #   def put(self, name):
- #       pass
-
- #   def delete(self, name):
- #       pass
