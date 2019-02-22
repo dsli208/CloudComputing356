@@ -11,8 +11,9 @@ move_id = 0
 
 def props_clear():
     global ttt_props
-    ttt_props = {'grid': [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
+    ttt_props = {'name': ' ', 'date': '', 'grid': [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
     print(ttt_props)
+    print("Props cleared")
 
 def computer_play():
     global ttt_props

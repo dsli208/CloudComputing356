@@ -23,18 +23,18 @@
 
             <tr>
                 <td> <div><button id="b0"> </button> </div></td>
-                <td> <div><button id="b1">X</button> </div> </td>
-                <td> <div><button id="b2">X</button> </div> </td>
+                <td> <div><button id="b1"> </button> </div> </td>
+                <td> <div><button id="b2"> </button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="b3">O</button> </div> </td>
-                <td> <div><button id="b4">O</button> </div> </td>
-                <td> <div><button id="b5">O</button> </div> </td>
+                <td> <div><button id="b3"> </button> </div> </td>
+                <td> <div><button id="b4"> </button> </div> </td>
+                <td> <div><button id="b5"> </button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="b6">X</button> </div> </td>
-                <td> <div><button id="b7">X</button> </div> </td>
-                <td> <div><button id="b8">X</button> </div> </td>
+                <td> <div><button id="b6"> </button> </div> </td>
+                <td> <div><button id="b7"> </button> </div> </td>
+                <td> <div><button id="b8"> </button> </div> </td>
             </tr>
             </table>
 
@@ -145,6 +145,7 @@
                             button.value = props.grid[i];
                             $("#" + buttonid).prop('value', button.value);
                         }
+                        console.log("Updating button");
                         button.innerHTML = props.grid[i];
                         console.log(button.value);
                     }
@@ -155,7 +156,6 @@
                     else if (props.grid['winner'] === 'O') {
                         console.log("O wins");
                     }
-                    //document.location.reload(true);
                 }
 
             </script>
