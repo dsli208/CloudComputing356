@@ -23,18 +23,18 @@
 
             <tr>
                 <td> <div><button id="b0"> </button> </div></td>
-                <td> <div><button id="b1"> </button> </div> </td>
-                <td> <div><button id="b2"> </button> </div> </td>
+                <td> <div><button id="b1">X</button> </div> </td>
+                <td> <div><button id="b2">X</button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="b3"> </button> </div> </td>
-                <td> <div><button id="b4"> </button> </div> </td>
-                <td> <div><button id="b5"> </button> </div> </td>
+                <td> <div><button id="b3">O</button> </div> </td>
+                <td> <div><button id="b4">O</button> </div> </td>
+                <td> <div><button id="b5">O</button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="b6"> </button> </div> </td>
-                <td> <div><button id="b7"> </button> </div> </td>
-                <td> <div><button id="b8"> </button> </div> </td>
+                <td> <div><button id="b6">X</button> </div> </td>
+                <td> <div><button id="b7">X</button> </div> </td>
+                <td> <div><button id="b8">X</button> </div> </td>
             </tr>
             </table>
 
@@ -42,38 +42,56 @@
 
                 $( "#b0" ).click(function() {
                     update_board(0);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b1" ).click(function() {
                     update_board(1);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b2" ).click(function() {
                     update_board(2);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b3" ).click(function() {
                     update_board(3);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b4" ).click(function() {
                     update_board(4);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b5" ).click(function() {
                     update_board(5);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b6" ).click(function() {
                     update_board(6);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b7" ).click(function() {
                     update_board(7);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 $( "#b8" ).click(function() {
                     update_board(8);
+                    get_board();
+                    document.location.reload(true);
                 });
 
                 function update_board(id) {
@@ -100,10 +118,12 @@
                 }
 
                 {% if board %}
+
                 get_board();
                 {% endif %}
 
                 function get_board() {
+                    console.log('Move ID: ' + {{ id }});
                     console.log("getting board");
                     // var props = {{ board }}
                     // var props = JSON.parse({{ board | tojson | safe}});
@@ -118,10 +138,13 @@
                         console.log(props['grid']);
                         if (props.grid[i] === null || props.grid[i] === " ") {
                             button.value = " ";
+                            $("#" + buttonid).prop('value', button.value);
                         }
                         else {
                             button.value = props.grid[i];
+                            $("#" + buttonid).prop('value', button.value);
                         }
+                        button.innerHTML = props.grid[i];
                         console.log(button.value);
                     }
 
@@ -131,7 +154,7 @@
                     else if (props.grid['winner'] === 'O') {
                         console.log("O wins");
                     }
-
+                    //document.location.reload(true);
                 }
 
             </script>
