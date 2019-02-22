@@ -22,29 +22,65 @@
             <table style="width:100%" border="1">
 
             <tr>
-                <td> <div><button id="0" onclick="update_board(id)"></button> </div></td>
-                <td> <div><button id="1" onclick="update_board(id)"></button> </div> </td>
-                <td> <div><button id="2" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="b0"> </button> </div></td>
+                <td> <div><button id="b1"> </button> </div> </td>
+                <td> <div><button id="b2"> </button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="3" onclick="update_board(id)"></button> </div> </td>
-                <td> <div><button id="4" onclick="update_board(id)"></button> </div> </td>
-                <td> <div><button id="5" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="b3"> </button> </div> </td>
+                <td> <div><button id="b4"> </button> </div> </td>
+                <td> <div><button id="b5"> </button> </div> </td>
             </tr>
             <tr>
-                <td> <div><button id="6" onclick="update_board(id)"></button> </div> </td>
-                <td> <div><button id="7" onclick="update_board(id)"></button> </div> </td>
-                <td> <div><button id="8" onclick="update_board(id)"></button> </div> </td>
+                <td> <div><button id="b6"> </button> </div> </td>
+                <td> <div><button id="b7"> </button> </div> </td>
+                <td> <div><button id="b8"> </button> </div> </td>
             </tr>
             </table>
 
-
            <script>
+
+                $( "#b0" ).click(function() {
+                    update_board(0);
+                });
+
+                $( "#b1" ).click(function() {
+                    update_board(1);
+                });
+
+                $( "#b2" ).click(function() {
+                    update_board(2);
+                });
+
+                $( "#b3" ).click(function() {
+                    update_board(3);
+                });
+
+                $( "#b4" ).click(function() {
+                    update_board(4);
+                });
+
+                $( "#b5" ).click(function() {
+                    update_board(5);
+                });
+
+                $( "#b6" ).click(function() {
+                    update_board(6);
+                });
+
+                $( "#b7" ).click(function() {
+                    update_board(7);
+                });
+
+                $( "#b8" ).click(function() {
+                    update_board(8);
+                });
+
                 function update_board(id) {
                     console.log(id);
 
                     $.ajax({
-                        url: '/ttt/play/',
+                        url: '{{ url_for('board') }}',
                         type: 'POST',
                         data: JSON.stringify({"grid_id": id}),
                         contentType: 'application/json; charset=utf-8',
@@ -54,24 +90,46 @@
                         },
                         error: function () {
                             alert("error");
-                            console.log("Undefined?")'
+                            // console.log("Undefined?");
                         }
                     });
 
+                    {% if board %}
+                    get_board();
+                    {% endif %}
                 }
+
+                {% if board %}
+                get_board();
+                {% endif %}
+
                 function get_board() {
-                    var props = JSON.parse('{{ grid }}');
+                    console.log("getting board");
+                    // var props = {{ board }}
+                    // var props = JSON.parse({{ board | tojson | safe}});
+                    var props_str = JSON.stringify({{ board | tojson | safe}});
+                    console.log(props_str);
+                    var props = JSON.parse(JSON.parse(props_str));
+                    // props = JSON.parse(props);
+                    console.log(props);
                     for (i = 0; i < 9; i++) {
-                        buttonid = i + "";
+                        buttonid = "b" + i;
                         button = document.getElementById(buttonid);
-                        button.value = grid['grid'][i];
+                        console.log(props['grid']);
+                        if (props.grid[i] === null || props.grid[i] === " ") {
+                            button.value = " ";
+                        }
+                        else {
+                            button.value = props.grid[i];
+                        }
+                        console.log(button.value);
                     }
 
-                    if (grid['winner'] === 'X'){
-
+                    if (props.grid['winner'] === 'X'){
+                        console.log("X wins");
                     }
-                    else if (grid['winner'] === 'O') {
-                        
+                    else if (props.grid['winner'] === 'O') {
+                        console.log("O wins");
                     }
 
                 }
