@@ -5,12 +5,12 @@ from flask import Flask, render_template, request, url_for, jsonify
 import time
 
 ttt_app = Flask(__name__)
-ttt_props = {'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
+ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
 
 def props_clear():
     global ttt_props
-    ttt_props = {'grid': [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
+    ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
     # print(ttt_props)
     # print("Props cleared")
 
