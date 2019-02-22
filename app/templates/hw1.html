@@ -101,6 +101,7 @@
                         url: '{{ url_for('board') }}',
                         type: 'POST',
                         data: JSON.stringify({"grid_id": id, "grid": [' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}),
+                        dataType: 'json',
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
                             // alert(response);
