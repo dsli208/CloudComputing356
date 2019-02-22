@@ -102,7 +102,7 @@
 
                     props.grid[id] = 'X';
                     $.ajax({
-                        url: '{{ url_for('board') }}',
+                        url: '/ttt/play',
                         type: 'POST',
                         data: JSON.stringify({"grid_id": id, "grid": props.grid}),
                         dataType: 'json',
