@@ -155,10 +155,12 @@
                         console.log(button.value);
                     }
 
-                    if (props.grid['winner'] === 'X'){
+                    if (props.winner === 'X'){
+                        alert("X is the winner!");
                         console.log("X wins");
                     }
-                    else if (props.grid['winner'] === 'O') {
+                    else if (props.winner === 'O') {
+                        alert("O is the winner!");
                         console.log("O wins");
                     }
                 }
