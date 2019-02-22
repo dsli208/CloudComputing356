@@ -83,7 +83,9 @@ def board():
                 ttt_props['winner'] = 'X'
                 ttt_grid = json.dumps(ttt_props)
                 # print(ttt_props)
-                return jsonify(ttt_props)
+                jify = jsonify(ttt_props)
+                # print(jify)
+                return jify
                 #return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', board=ttt_grid, getupdate=True, id=move_id)
             else:
                 computer_play()
@@ -91,22 +93,30 @@ def board():
                     ttt_props['winner'] = 'O'
                     ttt_grid = json.dumps(ttt_props)
                     # print(ttt_props)
-                    return jsonify(ttt_props)
+                    jify = jsonify(ttt_props)
+                    # print(jify)
+                    return jify
                     # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', board=ttt_grid, getupdate=True, id=move_id)
                 else:
                     ttt_grid = json.dumps(ttt_props)
                     # print(ttt_props)
-                    return jsonify(ttt_props)
+                    jify = jsonify(ttt_props)
+                    # print(jify)
+                    return jify
                     # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=True, id=move_id)
         else:
             ttt_grid = json.dumps(ttt_props)
             # print(ttt_grid)
-            return jsonify(ttt_props)
+            jify = jsonify(ttt_props)
+            # print(jify)
+            return jify
             # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=False, id=move_id)
     else:
         ttt_grid = json.dumps(ttt_props)
         # print(ttt_props)
-        return jsonify(ttt_props)
+        jify = jsonify(ttt_props)
+        # print(jify)
+        return jify
         # return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=False, id=move_id)
 
 if __name__ == '__main__':

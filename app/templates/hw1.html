@@ -100,7 +100,7 @@
                     $.ajax({
                         url: '{{ url_for('board') }}',
                         type: 'POST',
-                        data: JSON.stringify({"grid_id": id, "grid": [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}),
+                        data: JSON.stringify({"grid_id": id, "grid": [' ', 'X', ' ', ' ', ' ', ' ', ' ', ' ', ' '], "winner": ' '}),
                         contentType: 'application/json; charset=utf-8',
                         success: function (response) {
                             // alert(response);
