@@ -3,7 +3,6 @@ import json
 
 from flask import Flask, render_template, request, url_for, jsonify
 import time
-from flask_restful import Api, Resource, reqparse
 
 ttt_app = Flask(__name__)
 ttt_props = {'name': '', 'date': '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
@@ -74,9 +73,10 @@ def board():
     global ttt_props
     move_id += 1
     print('Request JSON')
-    print(request.json)
-    space = int(request.json['grid_id'])
+
     if request.method == 'POST':
+        print(request.json)
+        space = int(request.json['grid_id'])
         if ttt_props['grid'][space] == ' ':
             ttt_props['grid'][space] = 'X'
             if is_winner('X'):
