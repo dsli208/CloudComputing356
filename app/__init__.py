@@ -66,8 +66,8 @@ def index():
         # print(ttt_props)
         return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid, getupdate=False, id=move_id)
 
-@ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 @ttt_app.route('/ttt/play/', methods=['POST', 'GET'])
+@ttt_app.route('/ttt/play', methods=['POST', 'GET'])
 def board():
     global move_id
     global ttt_props
