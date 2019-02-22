@@ -80,7 +80,7 @@ def board():
         print("request grid")
         print(request.json['grid'])
         ttt_props['grid'] = request.json['grid']
-        if is_winner('X'):
+        if is_winner('X') and ttt_props['winner'] == ' ':
             ttt_props['winner'] = 'X'
             ttt_grid = json.dumps(ttt_props)
             print(ttt_props)
@@ -89,7 +89,7 @@ def board():
             return jify
         else:
             computer_play()
-            if is_winner('O'):
+            if is_winner('O') and ttt_props['winner'] == ' ':
                 ttt_props['winner'] = 'O'
     #            ttt_grid = json.dumps(ttt_props)
                 print(ttt_props)
