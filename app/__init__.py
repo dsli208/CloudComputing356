@@ -72,6 +72,7 @@ def board():
     global move_id
     global ttt_props
     move_id += 1
+    print('Request JSON')
     print(request.json)
     space = int(request.json['grid_id'])
     if request.method == 'POST':
