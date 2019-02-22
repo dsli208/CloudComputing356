@@ -11,8 +11,8 @@ move_id = 0
 def props_clear():
     global ttt_props
     ttt_props = {'grid': [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
-    print(ttt_props)
-    print("Props cleared")
+    # print(ttt_props)
+    # print("Props cleared")
 
 def computer_play():
     global ttt_props
@@ -53,7 +53,7 @@ def index():
     global ttt_props
     date = time.strftime("%Y-%m-%d", time.gmtime())
     if request.method == 'POST':
-        print('POST request')
+        # print('POST request')
         name = request.form['name']
         ttt_props['name'] = name
         ttt_props['date'] = date
@@ -61,9 +61,9 @@ def index():
         return render_template('hw1.html', name=ttt_props['name'], date=date, winner=None, board=ttt_grid, getupdate=False, id=move_id)
     else:
         props_clear()
-        print('GET request')
+        # print('GET request')
         ttt_grid = json.dumps(ttt_props)
-        print(ttt_props)
+        # print(ttt_props)
         return render_template('hw1.html', name=None, date=None, winner=None, board=ttt_grid, getupdate=False, id=move_id)
 
 @ttt_app.route('/ttt/play', methods=['POST', 'GET'])
@@ -72,36 +72,36 @@ def board():
     global move_id
     global ttt_props
     move_id += 1
-    print('Request JSON')
+    # print('Request JSON')
 
     if request.method == 'POST':
-        print(request.json)
+        # print(request.json)
         space = int(request.json['grid_id'])
         if ttt_props['grid'][space] == ' ':
             ttt_props['grid'][space] = 'X'
             if is_winner('X'):
                 ttt_props['winner'] = 'X'
                 ttt_grid = json.dumps(ttt_props)
-                print(ttt_props)
+                # print(ttt_props)
                 return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='X', board=ttt_grid, getupdate=True, id=move_id)
             else:
                 computer_play()
                 if is_winner('O'):
                     ttt_props['winner'] = 'O'
                     ttt_grid = json.dumps(ttt_props)
-                    print(ttt_props)
+                    # print(ttt_props)
                     return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner='O', board=ttt_grid, getupdate=True, id=move_id)
                 else:
                     ttt_grid = json.dumps(ttt_props)
-                    print(ttt_props)
+                    # print(ttt_props)
                     return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=True, id=move_id)
         else:
             ttt_grid = json.dumps(ttt_props)
-            print(ttt_grid)
+            # print(ttt_grid)
             return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=False, id=move_id)
     else:
         ttt_grid = json.dumps(ttt_props)
-        print(ttt_props)
+        # print(ttt_props)
         return render_template('hw1.html', name=ttt_props['name'], date=ttt_props['date'], winner=None, board=ttt_grid, getupdate=False, id=move_id)
 
 if __name__ == '__main__':
