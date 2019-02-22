@@ -77,7 +77,8 @@ def board():
     if request.method == 'POST':
         # print(request.json)
         space = int(request.json['grid_id'])
-
+        print("request grid")
+        print(request.json['grid'])
         ttt_props['grid'] = request.json['grid']
         if is_winner('X'):
             ttt_props['winner'] = 'X'
