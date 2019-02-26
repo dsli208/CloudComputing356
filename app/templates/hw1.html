@@ -94,6 +94,25 @@
                     document.location.reload(true);
                 });
 
+                function reset_board() {
+                    for (i = 0; i < 9; i++) {
+                        buttonid = "b" + i;
+                        button = document.getElementById(buttonid);
+                        /*console.log(props['grid']);
+                        if (props.grid[i] === null || props.grid[i] === " ") {
+                            button.value = " ";
+                            $("#" + buttonid).prop('value', button.value);
+                        }
+                        else {
+                            button.value = props.grid[i];
+                            $("#" + buttonid).prop('value', button.value);
+                        }*/
+                        console.log("Updating button");
+                        button.innerHTML = " ";
+                        // console.log(button.value);
+                    }
+                }
+
                 function update_board(id) {
                     console.log(id);
                     var props_str = JSON.stringify({{ board | tojson | safe}});
@@ -169,6 +188,8 @@
            {% else %}
         <form action="/ttt" method="post">
            <p>Name <input type = "text" name = "name" /></p>
+            <p>Password <input type="password" name="password" /></p>
+            <p>Email <input type="text" name="email" /></p>
             <p><input type = "submit" value = "submit" /></p>
             </form>
           {% endif %}
