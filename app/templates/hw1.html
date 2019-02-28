@@ -13,7 +13,7 @@
             <script>
                 console.log(name);
             </script>
-           {% if date %}
+           {% if name %}
 
 
             <h1>Hello {{ name }}, {{ date }}</h1>
@@ -177,21 +177,27 @@
                     if (props.winner === 'X'){
                         alert("X is the winner!");
                         console.log("X wins");
+                        reset_board();
                     }
                     else if (props.winner === 'O') {
                         alert("O is the winner!");
                         console.log("O wins");
+                        reset_board();
                     }
                 }
 
             </script>
            {% else %}
-        <form action="/ttt" method="post">
-           <p>Name <input type = "text" name = "name" /></p>
+        <form action="/adduser" method="post">
+           <p>Username <input type = "text" name = "name" /></p>
             <p>Password <input type="password" name="password" /></p>
             <p>Email <input type="text" name="email" /></p>
             <p><input type = "submit" value = "submit" /></p>
             </form>
+
+            {% if email %}
+            <p>Registration key has been sent to {{ email }}</p>
+            {% endif %}
           {% endif %}
 
    </body>
