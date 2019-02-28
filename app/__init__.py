@@ -8,16 +8,6 @@ from flask_pymongo import PyMongo
 
 ttt_app = Flask(__name__)
 
-ttt_app.config.update(dict(
-    DEBUG = True,
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'my_username@gmail.com',
-    MAIL_PASSWORD = 'my_password',
-))
-
 ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
 client = pymongo.MongoClient("mongodb://localhost:27017/")
