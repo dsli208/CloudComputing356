@@ -8,6 +8,15 @@ from flask_pymongo import PyMongo
 
 ttt_app = Flask(__name__)
 
+ttt_app.config['MAIL_SERVER']='smtp.gmail.com'
+ttt_app.config['MAIL_PORT'] = 587
+ttt_app.config['MAIL_USERNAME'] = 'friedcomputerz208@gmail.com'
+ttt_app.config['MAIL_PASSWORD'] = 'rdjxvuncdfblahtu'
+ttt_app.config['MAIL_USE_TLS'] = True
+ttt_app.config['MAIL_USE_SSL'] = False
+
+mail = Mail(ttt_app)
+
 ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
 client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -69,7 +78,6 @@ def index():
         users.insert_one(userinfo)
 
         # Send the message
-        mail = Mail(ttt_app)
         msg = Message("Tic-Tac-Toe Registration", sender="dsli@tictactoe.com")
         key = "abracadabra"  # temporary string until we can generate something random
         msg.body = "The key is: " + key
