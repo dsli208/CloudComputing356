@@ -7,6 +7,17 @@ from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
 
 ttt_app = Flask(__name__)
+
+ttt_app.config.update(dict(
+    DEBUG = True,
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = 587,
+    MAIL_USE_TLS = True,
+    MAIL_USE_SSL = False,
+    MAIL_USERNAME = 'my_username@gmail.com',
+    MAIL_PASSWORD = 'my_password',
+))
+
 ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
 client = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -65,7 +76,7 @@ def index():
         ttt_props['name'] = name
         mail_addr = request.form['email']
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
-        # users.insert_one(userinfo)
+        users.insert_one(userinfo)
 
         # Send the message
         mail = Mail(ttt_app)
@@ -77,7 +88,7 @@ def index():
 
         # Get the email-key pair and add it to the keys DB
         keypair = {'email': mail_addr, 'key': key}
-        # keys.insert_one(keypair)
+        keys.insert_one(keypair)
 
         # return redirect
         return redirect("/verify", code=302)

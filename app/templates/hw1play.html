@@ -2,52 +2,203 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/tictactoe.css') }}">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+        <script>
+               var name = '{{ name }}';
+
+           </script>
     </head>
    <body>
-       {% if name %}
-            <h1>Hello {{ name }}, {{ date }}!</h1>
+            <script>
+                console.log(name);
+            </script>
+           {% if name %}
+
+
+            <h1>Hello {{ name }}, {{ date }}</h1>
 
 
             <table style="width:100%" border="1">
+
             <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
+                <td> <div><button id="b0"> </button> </div></td>
+                <td> <div><button id="b1"> </button> </div> </td>
+                <td> <div><button id="b2"> </button> </div> </td>
             </tr>
             <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
+                <td> <div><button id="b3"> </button> </div> </td>
+                <td> <div><button id="b4"> </button> </div> </td>
+                <td> <div><button id="b5"> </button> </div> </td>
             </tr>
             <tr>
-                <td> </td>
-                <td> </td>
-                <td> </td>
+                <td> <div><button id="b6"> </button> </div> </td>
+                <td> <div><button id="b7"> </button> </div> </td>
+                <td> <div><button id="b8"> </button> </div> </td>
             </tr>
             </table>
 
-            <script>
-                function tableCreate() {
-                    var body = document.getElementsByTagName('body')[0];
-                    var tbl = document.createElement('table');
-                    tbl.style.width = '100%';
-                    tbl.setAttribute('border', '1');
-                    var tbdy = document.createElement('tbody');
-                    for (var i = 0; i < 3; i++) {
-                        var tr = document.createElement('tr');
-                        for (var j = 0; j < 3; j++) {
+           <script>
 
-                                var td = document.createElement('td');
-                                td.appendChild(document.createTextNode('\u0020'))
-                                tr.appendChild(td);
+                $( "#b0" ).click(function() {
+                    update_board(0);
+                    get_board();
+                    document.location.reload(true);
+                });
 
+                $( "#b1" ).click(function() {
+                    update_board(1);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b2" ).click(function() {
+                    update_board(2);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b3" ).click(function() {
+                    update_board(3);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b4" ).click(function() {
+                    update_board(4);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b5" ).click(function() {
+                    update_board(5);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b6" ).click(function() {
+                    update_board(6);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b7" ).click(function() {
+                    update_board(7);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                $( "#b8" ).click(function() {
+                    update_board(8);
+                    get_board();
+                    document.location.reload(true);
+                });
+
+                function reset_board() {
+                    for (i = 0; i < 9; i++) {
+                        buttonid = "b" + i;
+                        button = document.getElementById(buttonid);
+                        /*console.log(props['grid']);
+                        if (props.grid[i] === null || props.grid[i] === " ") {
+                            button.value = " ";
+                            $("#" + buttonid).prop('value', button.value);
                         }
-                        tbdy.appendChild(tr);
+                        else {
+                            button.value = props.grid[i];
+                            $("#" + buttonid).prop('value', button.value);
+                        }*/
+                        console.log("Updating button");
+                        button.innerHTML = " ";
+                        // console.log(button.value);
                     }
-                    tbl.appendChild(tbdy);
-                    body.appendChild(tbl)
                 }
+
+                function update_board(id) {
+                    console.log(id);
+                    var props_str = JSON.stringify({{ board | tojson | safe}});
+                    console.log(props_str);
+                    var props = JSON.parse(JSON.parse(props_str));
+
+                    props.grid[id] = 'X';
+                    $.ajax({
+                        url: '{{ url_for('board') }}',
+                        type: 'POST',
+                        data: JSON.stringify({"grid_id": id, "grid": props.grid}),
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (response) {
+                            // alert(response);
+                            // alert("Undefined thing");
+                            console.log("Works");
+                        },
+                        error: function () {
+                            alert("error");
+                            // console.log("Undefined?");
+                        }
+                    });
+
+                    {% if board %}
+                    get_board();
+                    {% endif %}
+                }
+
+                {% if board %}
+
+                get_board();
+                {% endif %}
+
+                function get_board() {
+                    console.log('Move ID: ' + {{ id }});
+                    console.log("getting board");
+                    // var props = {{ board }}
+                    // var props = JSON.parse({{ board | tojson | safe}});
+                    var props_str = JSON.stringify({{ board | tojson | safe}});
+                    console.log(props_str);
+                    var props = JSON.parse(JSON.parse(props_str));
+                    // props = JSON.parse(props);
+                    console.log(props);
+                    for (i = 0; i < 9; i++) {
+                        buttonid = "b" + i;
+                        button = document.getElementById(buttonid);
+                        console.log(props['grid']);
+                        if (props.grid[i] === null || props.grid[i] === " ") {
+                            button.value = " ";
+                            $("#" + buttonid).prop('value', button.value);
+                        }
+                        else {
+                            button.value = props.grid[i];
+                            $("#" + buttonid).prop('value', button.value);
+                        }
+                        console.log("Updating button");
+                        button.innerHTML = props.grid[i];
+                        console.log(button.value);
+                    }
+
+                    if (props.winner === 'X'){
+                        alert("X is the winner!");
+                        console.log("X wins");
+                        reset_board();
+                    }
+                    else if (props.winner === 'O') {
+                        alert("O is the winner!");
+                        console.log("O wins");
+                        reset_board();
+                    }
+                }
+
             </script>
-       {% endif %}
+           {% else %}
+        <form action="/adduser" method="post">
+           <p>Username <input type = "text" name = "name" /></p>
+            <p>Password <input type="password" name="password" /></p>
+            <p>Email <input type="text" name="email" /></p>
+            <p><input type = "submit" value = "submit" /></p>
+            </form>
+
+            {% if email %}
+            <p>Registration key has been sent to {{ email }}</p>
+            {% endif %}
+          {% endif %}
+
    </body>
 </html>
