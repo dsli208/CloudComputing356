@@ -128,14 +128,17 @@ def send_verification():
         key = request.form['key']
 
         # Get email-key pairing from database
+
         email_key_pair = keys.find_one({'email': email_addr})
 	print(email_key_pair)
         user_info = users.find_one({'email': email_addr})
 	print(user_info)
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
+            print("verified")
             return redirect("/login", code=302)
         else:
+            flash("Problem")
             return render_template('hw1verify.html')
     else:
         return render_template('hw1verify.html')
