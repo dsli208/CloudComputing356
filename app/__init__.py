@@ -149,6 +149,7 @@ def send_verification():
             flash("Problem")
             return render_template('hw1verify.html')
     else:
+	print("Verify GET request")
         return render_template('hw1verify.html')
 
 
