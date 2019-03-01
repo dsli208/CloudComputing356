@@ -76,6 +76,7 @@ def index():
         mail_addr = request.form['email']
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
         users.insert_one(userinfo)
+	print("Inserted user into users collection")
 
         # Send the message
         msg = Message("Tic-Tac-Toe Registration", sender="dsli@tictactoe.com")
@@ -87,6 +88,7 @@ def index():
         # Get the email-key pair and add it to the keys DB
         keypair = {'email': mail_addr, 'key': key}
         keys.insert_one(keypair)
+	print("Inserted key into keys collection")
 
         # return redirect
         return redirect("/verify", code=302)
