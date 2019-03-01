@@ -118,9 +118,10 @@ def index():
         return render_template('hw1.html', name=None, winner=None, email=None, board=ttt_grid, getupdate=False, id=move_id)
 
 # Verify user, send message with key
-@ttt_app.route('/verify')
+@ttt_app.route('/verify', methods=['GET', 'POST'])
 def send_verification():
     if request.method == 'POST':
+        print("Post request, verifying")
         email_addr = request.form['email']
         key = request.form['key']
 
