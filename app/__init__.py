@@ -92,6 +92,8 @@ def login():
 
 # Add user
 @ttt_app.route('/', methods=['GET', 'POST'])
+@ttt_app.route('/ttt', methods=['GET', 'POST'])
+@ttt_app.route('/ttt/', methods=['GET', 'POST'])
 @ttt_app.route('/adduser', methods=['GET', 'POST'])
 def index():
     global move_id
