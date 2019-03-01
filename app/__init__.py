@@ -2,7 +2,7 @@ import pymongo
 from random import randint
 import json
 
-from flask import Flask, render_template, request, url_for, jsonify, redirect
+from flask import Flask, render_template, request, url_for, jsonify, redirect, flash
 from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
 
@@ -22,6 +22,7 @@ move_id = 0
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["db"]
 users = db['users']
+verified_users = db['verified_users']
 games = db['games']
 keys = db['keys']
 
@@ -59,11 +60,32 @@ def is_winner(player):
         return True
 
 # Default route, login
-@ttt_app.route('/login')
+@ttt_app.route('/login', methods=['GET', 'POST'])
 def login():
-    pass
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # First check that user is a verified user
+        if users.find_one({"username": username}):
+            user_info = users.find_one({"username": username})
+            if not verified_users.find_one({"username": username}):
+                flash('User Not Verified Yet')
+                return render_template('hw1login.html')
+            elif (user_info['password'] == password):
+                flash('Login Successful - Redirecting to Game')
+                return redirect('/ttt/play')
+            else:
+                flash('Login Error')
+                return render_template('hw1login.html')
+        else:
+            flash('User Not Registered')
+            return render_template('hw1login.html')
+    else:
+        return render_template('hw1login.html')
 
 # Add user
+@ttt_app.route('/', methods=['GET', 'POST'])
 @ttt_app.route('/adduser', methods=['GET', 'POST'])
 def index():
     global move_id
@@ -100,7 +122,16 @@ def index():
 def send_verification():
     if request.method == 'POST':
         email_addr = request.form['email']
-        return render_template('hw1verify.html')
+        key = request.form['key']
+
+        # Get email-key pairing from database
+        email_key_pair = keys.find_one({'email': email_addr})
+        user_info = users.find_one({'email': email_addr})
+        if key == email_key_pair['key']:
+            verified_users.insert_one({"username": user_info['name'], "email": email_addr})
+            return redirect("/login", code=302)
+        else:
+            return render_template('hw1verify.html')
     else:
         return render_template('hw1verify.html')
 
