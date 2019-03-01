@@ -72,17 +72,22 @@ def login():
             user_info = users.find_one({"username": username})
             if not verified_users.find_one({"username": username}):
                 flash('User Not Verified Yet')
+                print('User Not Verified Yet')
                 return render_template('hw1login.html')
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
+                print('Login Successful - Redirecting to Game')
                 return redirect('/ttt/play')
             else:
                 flash('Login Error')
+                print('Login Error')
                 return render_template('hw1login.html')
         else:
             flash('User Not Registered')
+            print('User Not Registered')
             return render_template('hw1login.html')
     else:
+        print("GET request")
         return render_template('hw1login.html')
 
 # Add user
@@ -99,7 +104,7 @@ def index():
         mail_addr = request.form['email']
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
         users.insert_one(userinfo)
-	print("Inserted user into users collection")
+        print("Inserted user into users collection")
 
         # Send the message
         msg = Message("Tic-Tac-Toe Registration", sender="dsli@tictactoe.com")
@@ -111,7 +116,7 @@ def index():
         # Get the email-key pair and add it to the keys DB
         keypair = {'email': mail_addr, 'key': key}
         keys.insert_one(keypair)
-	print("Inserted key into keys collection")
+        print("Inserted key into keys collection")
 
         # return redirect
         return redirect("/verify", code=302)
@@ -131,9 +136,9 @@ def send_verification():
         # Get email-key pairing from database
 
         email_key_pair = keys.find_one({'email': email_addr})
-	print(email_key_pair)
+        print(email_key_pair)
         user_info = users.find_one({'email': email_addr})
-	print(user_info)
+        print(user_info)
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
