@@ -62,6 +62,7 @@ def is_winner(player):
 # Default route, login
 @ttt_app.route('/login', methods=['GET', 'POST'])
 def login():
+    print("Login")
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
