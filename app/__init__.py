@@ -77,12 +77,12 @@ def login():
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
-                return jsonify({"Status": "OK"})
+                return jsonify({"status":"OK"})
                 #return redirect('/ttt/play')
             else:
                 flash('Login Error')
                 print('Login Error')
-                return jsonify({"Status": "ERROR"})
+                return jsonify({"status": "ERROR"})
                 #return render_template('hw1login.html')
         else:
             flash('User Not Registered')
@@ -109,7 +109,7 @@ def index():
         request.form = request.form.to_dict()
         if not request.form.has_key('name'):
             print("Bad form formatting")
-            return jsonify({"Status":"OK"})
+            return jsonify({"status":"OK"})
         print(request.form)
         name = request.form['name']
         print("Obtained name")
@@ -136,7 +136,7 @@ def index():
 
         # return redirect
         print("Redirecting to verify page")
-        return jsonify({"Status": "OK"})
+        return jsonify({"status":"OK"})
         #return redirect("/verify", code=302)
     else:
         print("Add user GET request")
@@ -161,11 +161,11 @@ def send_verification():
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
-            return jsonify({"Status": "OK"})
+            return jsonify({"status":"OK"})
             # return redirect("/login", code=302)
         else:
             flash("Problem")
-            return jsonify({"Status": "ERROR"})
+            return jsonify({"status": "ERROR"})
             #return render_template('hw1verify.html')
     else:
         print("Verify GET request")
