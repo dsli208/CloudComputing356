@@ -134,7 +134,7 @@ def index():
 
         # return redirect
 	print("Redirecting to verify page")
-        return redirect("/verify", code=302)
+        return redirect("/verify", code=200)
     else:
 	print("Add user GET request")
         props_clear()
@@ -158,7 +158,7 @@ def send_verification():
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
-            return redirect("/login", code=302)
+            return redirect("/login", code=200)
         else:
             flash("Problem")
             return render_template('hw1verify.html')
