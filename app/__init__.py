@@ -77,11 +77,13 @@ def login():
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
-                return redirect('/ttt/play')
+                return jsonify({"Status": "OK"})
+                #return redirect('/ttt/play')
             else:
                 flash('Login Error')
                 print('Login Error')
-                return render_template('hw1login.html')
+                return jsonify({"Status": "ERROR"})
+                #return render_template('hw1login.html')
         else:
             flash('User Not Registered')
             print('User Not Registered')
@@ -102,22 +104,30 @@ def index():
     global ttt_props
     print("Finding request method")
     if request.method == 'POST':
-	print("POST request")
+        print("POST request")
         # Gather the details and add to users DB
+<<<<<<< HEAD
 	request.form = request.form.to_dict()
 	if (not request.form.has_key('name')) or (not request.form['name'] and not request.form['email'] and not request.form['password']):
 		print("Bad form formatting")
 		return render_template("hw1.html")
 	print(request.form)
+=======
+        request.form = request.form.to_dict()
+        if not request.form.has_key('name'):
+            print("Bad form formatting")
+            return jsonify({"Status":"OK"})
+        print(request.form)
+>>>>>>> b5c2b1d29320994519c0974eecb6644e5259e3d4
         name = request.form['name']
-	print("Obtained name")
+        print("Obtained name")
         ttt_props['name'] = name
-	print("Now let's get the email")
+        print("Now let's get the email")
         mail_addr = request.form['email']
-	print(name + " " + mail_addr)
+        print(name + " " + mail_addr)
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
         print(userinfo)
-	users.insert_one(userinfo)
+        users.insert_one(userinfo)
         print("Inserted user into users collection")
 
         # Send the message
@@ -133,10 +143,11 @@ def index():
         print("Inserted key into keys collection")
 
         # return redirect
-	print("Redirecting to verify page")
-        return redirect("/verify", code=200)
+        print("Redirecting to verify page")
+        return jsonify({"Status": "OK"})
+        #return redirect("/verify", code=302)
     else:
-	print("Add user GET request")
+        print("Add user GET request")
         props_clear()
         ttt_grid = json.dumps(ttt_props)
         return render_template('hw1.html', name=None, winner=None, email=None, board=ttt_grid, getupdate=False, id=move_id)
@@ -158,12 +169,14 @@ def send_verification():
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
-            return redirect("/login", code=200)
+            return jsonify({"Status": "OK"})
+            # return redirect("/login", code=302)
         else:
             flash("Problem")
-            return render_template('hw1verify.html')
+            return jsonify({"Status": "ERROR"})
+            #return render_template('hw1verify.html')
     else:
-	print("Verify GET request")
+        print("Verify GET request")
         return render_template('hw1verify.html')
 
 
