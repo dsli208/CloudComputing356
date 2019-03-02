@@ -106,19 +106,11 @@ def index():
     if request.method == 'POST':
         print("POST request")
         # Gather the details and add to users DB
-<<<<<<< HEAD
-	request.form = request.form.to_dict()
-	if (not request.form.has_key('name')) or (not request.form['name'] and not request.form['email'] and not request.form['password']):
-		print("Bad form formatting")
-		return render_template("hw1.html")
-	print(request.form)
-=======
         request.form = request.form.to_dict()
         if not request.form.has_key('name'):
             print("Bad form formatting")
             return jsonify({"Status":"OK"})
         print(request.form)
->>>>>>> b5c2b1d29320994519c0974eecb6644e5259e3d4
         name = request.form['name']
         print("Obtained name")
         ttt_props['name'] = name
