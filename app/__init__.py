@@ -96,16 +96,28 @@ def login():
 @ttt_app.route('/ttt/', methods=['GET', 'POST'])
 @ttt_app.route('/adduser', methods=['GET', 'POST'])
 def index():
+    print("Add user")
     global move_id
     move_id += 1
     global ttt_props
+    print("Finding request method")
     if request.method == 'POST':
+	print("POST request")
         # Gather the details and add to users DB
+	request.form = request.form.to_dict()
+	if not request.form.has_key('name'):
+		print("Bad form formatting")
+		return render_template("hw1.html")
+	print(request.form)
         name = request.form['name']
+	print("Obtained name")
         ttt_props['name'] = name
+	print("Now let's get the email")
         mail_addr = request.form['email']
+	print(name + " " + mail_addr)
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
-        users.insert_one(userinfo)
+        print(userinfo)
+	users.insert_one(userinfo)
         print("Inserted user into users collection")
 
         # Send the message
@@ -121,8 +133,10 @@ def index():
         print("Inserted key into keys collection")
 
         # return redirect
+	print("Redirecting to verify page")
         return redirect("/verify", code=302)
     else:
+	print("Add user GET request")
         props_clear()
         ttt_grid = json.dumps(ttt_props)
         return render_template('hw1.html', name=None, winner=None, email=None, board=ttt_grid, getupdate=False, id=move_id)
