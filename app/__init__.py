@@ -152,6 +152,13 @@ def index():
 def send_verification():
     if request.method == 'POST':
         print("Post request, verifying")
+
+        # Verify request form
+        request.form = request.form.to_dict()
+        if not request.form.has_key('email') or not request.form.has_key('username'):
+            print("Bad form formatting")
+            return jsonify({"status": "OK"})
+
         email_addr = request.form['email']
         key = request.form['key']
 
