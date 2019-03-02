@@ -138,7 +138,7 @@ def index():
 
         # return redirect
         print("Redirecting to verify page")
-        open('/verify')
+        redirect('/verify', code=200)
         return jsonify({"status":"OK"})
         #return redirect("/verify", code=302)
     else:
