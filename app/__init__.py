@@ -2,7 +2,7 @@ import pymongo
 from random import randint
 import json
 import urllib
-from urllib.request import urlopen
+# from urllib.request import urlopen
 
 from flask import Flask, render_template, request, url_for, jsonify, redirect, flash
 from flask_mail import Mail, Message
@@ -138,7 +138,7 @@ def index():
 
         # return redirect
         print("Redirecting to verify page")
-        urllib.request.urlopen('/verify')
+        open('/verify')
         return jsonify({"status":"OK"})
         #return redirect("/verify", code=302)
     else:
