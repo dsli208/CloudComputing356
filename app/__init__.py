@@ -105,7 +105,7 @@ def index():
 	print("POST request")
         # Gather the details and add to users DB
 	request.form = request.form.to_dict()
-	if not request.form.has_key('name'):
+	if (not request.form.has_key('name')) or (not request.form['name'] and not request.form['email'] and not request.form['password']):
 		print("Bad form formatting")
 		return render_template("hw1.html")
 	print(request.form)
