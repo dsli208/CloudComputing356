@@ -1,7 +1,8 @@
 import pymongo
 from random import randint
 import json
-import urllib, urllib.request
+import urllib
+from urllib.request import urlopen
 
 from flask import Flask, render_template, request, url_for, jsonify, redirect, flash
 from flask_mail import Mail, Message
