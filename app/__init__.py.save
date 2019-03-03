@@ -1,17 +1,13 @@
 import pymongo
 from random import randint
 import json
-import urllib
-# from urllib.request import urlopen
 
-from flask import Flask, render_template, request, url_for, jsonify, redirect, flash, session
+from flask import Flask, render_template, request, url_for, jsonify, redirect, flash
 from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
-from flask_session import Session
 
 ttt_app = Flask(__name__)
 
-# Mail Server Config
 ttt_app.config['MAIL_SERVER']='smtp.gmail.com'
 ttt_app.config['MAIL_PORT'] = 587
 ttt_app.config['MAIL_USERNAME'] = 'friedcomputerz208@gmail.com'
@@ -20,11 +16,6 @@ ttt_app.config['MAIL_USE_TLS'] = True
 ttt_app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(ttt_app)
-
-# Flask Session Config
-# ttt_app.config['SESSION_TYPE'] = 'redis'
-
-Session(ttt_app)
 
 ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
@@ -68,24 +59,11 @@ def is_winner(player):
     elif ttt_props['grid'][2] == ttt_props['grid'][4] == ttt_props['grid'][6] == player:
         return True
 
-# Logout
-@ttt_app.route('/logout', methods=['GET', 'POST'])
-def logout():
-    print("Logging out")
-    session.pop('username', None)
-    return jsonify({"status": "OK"})
-
 # Default route, login
 @ttt_app.route('/login', methods=['GET', 'POST'])
 def login():
     print("Login")
     if request.method == 'POST':
-        # Verify request form
-        request.form = request.form.to_dict()
-        if not request.form.has_key('email') or not request.form.has_key('username'):
-            print("Bad form formatting")
-            return jsonify({"status": "OK"})
-
         username = request.form['username']
         password = request.form['password']
 
@@ -99,22 +77,17 @@ def login():
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
-
-                # Login success - store username in session
-                if Session['username'] != None:
-                    Session['username'] = username
-
-                return jsonify({"status":"OK"})
+                return jsonify({"Status": "OK"})
                 #return redirect('/ttt/play')
             else:
                 flash('Login Error')
                 print('Login Error')
-                return jsonify({"status": "ERROR"})
+                return jsonify({"Status": "ERROR"})
                 #return render_template('hw1login.html')
         else:
             flash('User Not Registered')
             print('User Not Registered')
-            return jsonify({"status": "ERROR"})
+            return render_template('hw1login.html')
     else:
         print("GET request")
         return render_template('hw1login.html')
@@ -133,11 +106,12 @@ def index():
     if request.method == 'POST':
         print("POST request")
         # Gather the details and add to users DB
-        request.form = request.form.to_dict()
+ct()
         if not request.form.has_key('name'):
             print("Bad form formatting")
-            return jsonify({"status":"OK"})
+            return jsonify({"Status":"OK"})
         print(request.form)
+>>>>>>> b5c2b1d29320994519c0974eecb6644e5259e3d4
         name = request.form['name']
         print("Obtained name")
         ttt_props['name'] = name
@@ -163,8 +137,7 @@ def index():
 
         # return redirect
         print("Redirecting to verify page")
-        redirect('/verify', code=200)
-        return jsonify({"status":"OK"})
+        return jsonify({"Status": "OK"})
         #return redirect("/verify", code=302)
     else:
         print("Add user GET request")
@@ -177,13 +150,6 @@ def index():
 def send_verification():
     if request.method == 'POST':
         print("Post request, verifying")
-
-        # Verify request form
-        request.form = request.form.to_dict()
-        if not request.form.has_key('email') or not request.form.has_key('username'):
-            print("Bad form formatting")
-            return jsonify({"status": "OK"})
-
         email_addr = request.form['email']
         key = request.form['key']
 
@@ -196,11 +162,11 @@ def send_verification():
         if key == email_key_pair['key']:
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
-            return jsonify({"status":"OK"})
+            return jsonify({"Status": "OK"})
             # return redirect("/login", code=302)
         else:
             flash("Problem")
-            return jsonify({"status": "ERROR"})
+            return jsonify({"Status": "ERROR"})
             #return render_template('hw1verify.html')
     else:
         print("Verify GET request")
