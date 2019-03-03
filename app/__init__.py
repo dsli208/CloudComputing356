@@ -142,7 +142,7 @@ def index():
             print("Bad form formatting")
             return jsonify({"status":"OK"})
 
-        name = form['name']
+        name = form['username']
         print("Obtained name")
         ttt_props['name'] = name
         print("Now let's get the email")
