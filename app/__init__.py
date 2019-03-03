@@ -81,15 +81,15 @@ def login():
     print("Login")
     if request.method == 'POST':
         # Verify request form
-        request.form = request.form.to_dict()
-	print(request.get_json())
+        form = request.get_json()
+        print(request.get_json())
 
-        if not request.form.has_key('username') or not request.form.has_key('password'):
+        if not form.has_key('username') or not form.has_key('password'):
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
-        username = request.form['username']
-        password = request.form['password']
+        username = form['username']
+        password = form['password']
 
         # First check that user is a verified user
         if users.find_one({"username": username}):
@@ -99,7 +99,7 @@ def login():
                 print('User Not Verified Yet')
                 return jsonify({"status": "ERROR"})
             elif (user_info['password'] == password):
-                flash('Login Successful - Redirecting to Game')
+                # flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
 
                 # Login success - store username in session
