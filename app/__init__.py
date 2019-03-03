@@ -135,16 +135,18 @@ def index():
     if request.method == 'POST':
         print("POST request")
         # Gather the details and add to users DB
-        request.form = request.form.to_dict()
-        if not request.form.has_key('name'):
+        form = request.json
+        print(request.json)
+
+        if not 'name' in form:
             print("Bad form formatting")
             return jsonify({"status":"OK"})
-        print(request.form)
-        name = request.form['name']
+
+        name = form['name']
         print("Obtained name")
         ttt_props['name'] = name
         print("Now let's get the email")
-        mail_addr = request.form['email']
+        mail_addr = form['email']
         print(name + " " + mail_addr)
         userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
         print(userinfo)
@@ -181,13 +183,15 @@ def send_verification():
         print("Post request, verifying")
 
         # Verify request form
-        request.form = request.form.to_dict()
-        if not request.form.has_key('email') or not request.form.has_key('username'):
+        form = request.json
+        print(request.json)
+
+        if not 'email' in form or not 'username' in form:
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
-        email_addr = request.form['email']
-        key = request.form['key']
+        email_addr = form['email']
+        key = form['key']
 
         # Get email-key pairing from database
 
