@@ -84,7 +84,7 @@ def login():
         form = request.get_json()
         print(request.get_json())
 
-        if not form.has_key('username') or not form.has_key('password'):
+        if not 'username' in form or not 'password' in form:
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
