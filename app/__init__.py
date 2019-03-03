@@ -261,7 +261,7 @@ def board():
         if not 'username' in session:
             return jsonify({"status": "ERROR"})
         print("request grid")
-        print(request.json['grid'])
+        print(request.json)
         ttt_props['grid'] = request.json['grid']
         if is_winner('X') and ttt_props['winner'] == ' ':
             # Mark X as the winner and prepare the winner file (ttt_props)
@@ -308,7 +308,7 @@ def board():
 
                 # Update the games DB
                 games.update_one({"username": username})
-                
+
                 print(jify)
                 return jify
             else:
