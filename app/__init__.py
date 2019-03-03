@@ -86,6 +86,8 @@ def login():
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
+        print(request.form)
+
         username = request.form['username']
         password = request.form['password']
 
