@@ -4,12 +4,14 @@ import json
 import urllib
 # from urllib.request import urlopen
 
-from flask import Flask, render_template, request, url_for, jsonify, redirect, flash
+from flask import Flask, render_template, request, url_for, jsonify, redirect, flash, session
 from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
+from flask.ext.session import Session
 
 ttt_app = Flask(__name__)
 
+# Mail Server Config
 ttt_app.config['MAIL_SERVER']='smtp.gmail.com'
 ttt_app.config['MAIL_PORT'] = 587
 ttt_app.config['MAIL_USERNAME'] = 'friedcomputerz208@gmail.com'
@@ -18,6 +20,11 @@ ttt_app.config['MAIL_USE_TLS'] = True
 ttt_app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(ttt_app)
+
+# Flask Session Config
+ttt_app.config['SESSION_TYPE'] = 'redis'
+
+Session(ttt_app)
 
 ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
@@ -61,6 +68,13 @@ def is_winner(player):
     elif ttt_props['grid'][2] == ttt_props['grid'][4] == ttt_props['grid'][6] == player:
         return True
 
+# Logout
+@ttt_app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    print("Logging out")
+    session.pop('username', None)
+    return jsonify({"status": "OK"})
+
 # Default route, login
 @ttt_app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,7 +85,7 @@ def login():
         if not request.form.has_key('email') or not request.form.has_key('username'):
             print("Bad form formatting")
             return jsonify({"status": "OK"})
-        
+
         username = request.form['username']
         password = request.form['password']
 
@@ -85,6 +99,11 @@ def login():
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
+
+                # Login success - store username in session
+                if Session['username'] != None:
+                    Session['username'] = username
+
                 return jsonify({"status":"OK"})
                 #return redirect('/ttt/play')
             else:
@@ -95,7 +114,7 @@ def login():
         else:
             flash('User Not Registered')
             print('User Not Registered')
-            return render_template('hw1login.html')
+            return jsonify({"status": "ERROR"})
     else:
         print("GET request")
         return render_template('hw1login.html')
