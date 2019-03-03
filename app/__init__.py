@@ -82,7 +82,7 @@ def login():
     if request.method == 'POST':
         # Verify request form
         request.form = request.form.to_dict()
-	print(request.form)
+	print(request.get_json())
 
         if not request.form.has_key('username') or not request.form.has_key('password'):
             print("Bad form formatting")
