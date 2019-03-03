@@ -236,7 +236,7 @@ def send_verification():
             print("verified")
 
             # Now, create their game properties
-            user_games_list = {}
+            user_games_list = []
             user_game_data = {'username':user_info['username'],'id': 100, "game_list":user_games_list}
             games.insert_one(user_game_data)
 
