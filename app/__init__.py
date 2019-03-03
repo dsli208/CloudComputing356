@@ -103,8 +103,8 @@ def login():
                 print('Login Successful - Redirecting to Game')
 
                 # Login success - store username in session
-                if Session['username'] != None:
-                    Session['username'] = username
+                if 'username' not in session:
+                    session['username'] = username
 
                 return jsonify({"status":"OK"})
                 #return redirect('/ttt/play')
