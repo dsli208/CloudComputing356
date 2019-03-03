@@ -71,7 +71,7 @@ def is_winner(player):
 # List Games
 @ttt_app.route('/listgames', methods=['GET', 'POST'])
 def list_games():
-    return {"status":"OK", "games":[]}
+    return jsonify({"status":"OK", "games":[]})
 
 @ttt_app.route('/getgame', methods=["GET", "POST"])
 def get_game():
