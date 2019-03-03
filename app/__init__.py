@@ -95,7 +95,7 @@ def login():
         if users.find_one({"username": username}):
             user_info = users.find_one({"username": username})
             if not verified_users.find_one({"username": username}):
-                flash('User Not Verified Yet')
+                # flash('User Not Verified Yet')
                 print('User Not Verified Yet')
                 return jsonify({"status": "ERROR"})
             elif (user_info['password'] == password):
@@ -109,12 +109,12 @@ def login():
                 return jsonify({"status":"OK"})
                 #return redirect('/ttt/play')
             else:
-                flash('Login Error')
+                # flash('Login Error')
                 print('Login Error')
                 return jsonify({"status": "ERROR"})
                 #return render_template('hw1login.html')
         else:
-            flash('User Not Registered')
+            # flash('User Not Registered')
             print('User Not Registered')
             return jsonify({"status": "ERROR"})
     else:
