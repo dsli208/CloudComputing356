@@ -78,13 +78,20 @@ def list_games():
         if user_data is None:
             return jsonify({"status": "OK", "games": []})
         else:
+            print(user_data)
             return jsonify({"status": "OK", "games":user_data['game_list']})
     else:
         return jsonify({"status":"OK", "games":[]})
 
 @ttt_app.route('/getgame', methods=["GET", "POST"])
 def get_game():
-    pass
+    form = request.json
+    print(form)
+    if not 'id' in form:
+        print("Bad Formatting")
+        return jsonify({"status":"ERROR"})
+
+    id = form['id']
 
 @ttt_app.route('/getscore', methods=['GET', 'POST'])
 def get_score():
