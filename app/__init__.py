@@ -74,8 +74,10 @@ def is_winner(player):
 def list_games():
     if 'username' in session:
         username = session['username']
+        print(username + ' is currently logged in')
         user_data = games.find_one({'username':username})
         if user_data is None:
+            print(username + "'s data was somehow not found")
             return jsonify({"status": "OK", "games": []})
         else:
             print(user_data)
