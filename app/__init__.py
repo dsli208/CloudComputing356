@@ -1,8 +1,7 @@
 import pymongo
 from random import randint
 import json
-import urllib
-# from urllib.request import urlopen
+import time
 
 from flask import Flask, render_template, request, url_for, jsonify, redirect, flash, session
 from flask_mail import Mail, Message
@@ -259,14 +258,33 @@ def board():
     move_id += 1
 
     if request.method == 'POST':
+        if not 'username' in session:
+            return jsonify({"status": "ERROR"})
         print("request grid")
         print(request.json['grid'])
         ttt_props['grid'] = request.json['grid']
         if is_winner('X') and ttt_props['winner'] == ' ':
+            # Mark X as the winner and prepare the winner file (ttt_props)
             ttt_props['winner'] = 'X'
             ttt_grid = json.dumps(ttt_props)
+            ttt_props['status'] = 'OK'
             print(ttt_props)
             jify = jsonify(ttt_props)
+
+            # Store the game in the user's games list array in the DB
+            # First get the array
+            username = session['username']
+            game_info_db = games.find_one({"username": username})
+            start_date = time.strftime("%Y-%m-%d", time.gmtime())
+            saved_game_data = {"id":game_info_db['id'], "start_date": start_date}
+            # Append game data to past games array
+            game_info_db['game_list'].append(saved_game_data)
+            # Update ID
+            game_info_db['id'] = game_info_db['id'] + 1
+
+            # Update the games DB
+            games.update_one({"username":username})
+
             print(jify)
             return jify
         else:
@@ -276,6 +294,21 @@ def board():
     #            ttt_grid = json.dumps(ttt_props)
                 print(ttt_props)
                 jify = jsonify(ttt_props)
+
+                # Store the game in the user's games list array in the DB
+                # First get the array
+                username = session['username']
+                game_info_db = games.find_one({"username": username})
+                start_date = time.strftime("%Y-%m-%d", time.gmtime())
+                saved_game_data = {"id": game_info_db['id'], "start_date": start_date}
+                # Append game data to past games array
+                game_info_db['game_list'].append(saved_game_data)
+                # Update ID
+                game_info_db['id'] = game_info_db['id'] + 1
+
+                # Update the games DB
+                games.update_one({"username": username})
+                
                 print(jify)
                 return jify
             else:
