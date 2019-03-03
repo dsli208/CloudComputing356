@@ -22,7 +22,7 @@ ttt_app.config['MAIL_USE_SSL'] = False
 mail = Mail(ttt_app)
 
 # Flask Session Config
-# ttt_app.config['SESSION_TYPE'] = 'redis'
+ttt_app.config['SESSION_TYPE'] = 'mongodb'
 
 Session(ttt_app)
 
