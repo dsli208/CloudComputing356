@@ -7,7 +7,7 @@ import urllib
 from flask import Flask, render_template, request, url_for, jsonify, redirect, flash, session
 from flask_mail import Mail, Message
 from flask_pymongo import PyMongo
-from flask.ext.session import Session
+from flask_session import Session
 
 ttt_app = Flask(__name__)
 
