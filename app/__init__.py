@@ -313,10 +313,10 @@ def board():
                 # Append game data to past games array
                 game_info_db['game_list'].append(saved_game_data)
                 # Update ID
-                game_info_db['id'] = game_info_db['id'] + 1
+                new_id = game_info_db['id'] + 1
 
                 # Update the games DB
-                games.update_one({"username": username})
+                games.update_one({"username": username}, {'$set': {'id': new_id, 'game_list': game_info_db['game_list']}}, upsert=False)
 
                 print(jify)
                 return jify
