@@ -95,7 +95,7 @@ def login():
             if not verified_users.find_one({"username": username}):
                 flash('User Not Verified Yet')
                 print('User Not Verified Yet')
-                return render_template('hw1login.html')
+                return jsonify({"status": "ERROR"})
             elif (user_info['password'] == password):
                 flash('Login Successful - Redirecting to Game')
                 print('Login Successful - Redirecting to Game')
