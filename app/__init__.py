@@ -186,7 +186,7 @@ def send_verification():
         form = request.json
         print(request.json)
 
-        if not 'email' in form or not 'username' in form:
+        if not 'email' in form or not 'key' in form:
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
