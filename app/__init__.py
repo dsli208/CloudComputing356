@@ -262,6 +262,14 @@ def board():
             return jsonify({"status": "ERROR"})
         print("request grid")
         print(request.json)
+
+        # Handle NoneType move case
+        if request.json['move'] is None:
+            ttt_props['winner'] = ' '
+            ttt_props['status'] = 'OK'
+            print(ttt_props)
+            return jsonify(ttt_props)
+
         ttt_props['grid'][request.json['move']] = 'X'
         # ttt_props['grid'] = request.json['grid']
         if is_winner('X') and ttt_props['winner'] == ' ':
