@@ -138,7 +138,7 @@ def index():
         form = request.json
         print(request.json)
 
-        if not 'name' in form:
+        if not 'username' in form:
             print("Bad form formatting")
             return jsonify({"status":"OK"})
 
@@ -148,7 +148,7 @@ def index():
         print("Now let's get the email")
         mail_addr = form['email']
         print(name + " " + mail_addr)
-        userinfo = {'username': name, 'password': request.form['password'], 'email': mail_addr}
+        userinfo = {'username': name, 'password': form['password'], 'email': mail_addr}
         print(userinfo)
         users.insert_one(userinfo)
         print("Inserted user into users collection")
