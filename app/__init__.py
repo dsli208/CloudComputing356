@@ -32,7 +32,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["db"]
 users = db['users']
 verified_users = db['verified_users']
-games = db['games']
+games = db['games'] # Stores in nested dictionaries by user and next game id : dictionary of past games
 keys = db['keys']
 
 def props_clear():
@@ -69,9 +69,18 @@ def is_winner(player):
         return True
 
 # List Games
+# When getting games, get those ONLY where the USERNAME MATCHES
 @ttt_app.route('/listgames', methods=['GET', 'POST'])
 def list_games():
-    return jsonify({"status":"OK", "games":[]})
+    if 'username' in session:
+        username = session['username']
+        user_data = games.find_one({'username':username})
+        if user_data is None:
+            return jsonify({"status": "OK", "games": []})
+        else:
+            return jsonify({"status": "OK", "games":user_data['game_list']})
+    else:
+        return jsonify({"status":"OK", "games":[]})
 
 @ttt_app.route('/getgame', methods=["GET", "POST"])
 def get_game():
@@ -213,8 +222,15 @@ def send_verification():
         user_info = users.find_one({'email': email_addr})
         print(user_info)
         if key == email_key_pair['key']:
+            # Add user to verified users DB
             verified_users.insert_one({"username": user_info['username'], "email": email_addr})
             print("verified")
+
+            # Now, create their game properties
+            user_games_list = {}
+            user_game_data = {'username':user_info['username'],'id': 100, "game_list":user_games_list}
+            games.insert_one(user_game_data)
+
             return jsonify({"status":"OK"})
             # return redirect("/login", code=302)
         else:
