@@ -81,8 +81,8 @@ def login():
     print("Login")
     if request.method == 'POST':
         # Verify request form
-        form = request.get_json()
-        print(request.get_json())
+        form = request.json
+        print(request.json)
 
         if not 'username' in form or not 'password' in form:
             print("Bad form formatting")
