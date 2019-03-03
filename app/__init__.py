@@ -84,7 +84,7 @@ def login():
         request.form = request.form.to_dict()
 	print(request.form)
 
-        if not request.form.has_key('username'):
+        if not request.form.has_key('username') or not request.form.has_key('password'):
             print("Bad form formatting")
             return jsonify({"status": "OK"})
 
