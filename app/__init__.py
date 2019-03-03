@@ -138,7 +138,7 @@ def index():
         form = request.json
         print(request.json)
 
-        if not 'username' in form:
+        if not 'name' in form:
             print("Bad form formatting")
             return jsonify({"status":"OK"})
 
