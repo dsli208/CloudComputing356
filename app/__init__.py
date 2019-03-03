@@ -26,7 +26,7 @@ ttt_app.config['SESSION_TYPE'] = 'mongodb'
 
 Session(ttt_app)
 
-ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
+ttt_props = {'status':' ', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 move_id = 0
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["db"]
@@ -37,7 +37,7 @@ keys = db['keys']
 
 def props_clear():
     global ttt_props
-    ttt_props = {'name': '', 'date' : '', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
+    ttt_props = {'status':'OK', 'grid': [' ', ' ', ' ' , ' ', ' ', ' ', ' ', ' ', ' '], 'winner': ' '}
 
 def computer_play():
     global ttt_props
@@ -67,6 +67,19 @@ def is_winner(player):
         return True
     elif ttt_props['grid'][2] == ttt_props['grid'][4] == ttt_props['grid'][6] == player:
         return True
+
+# List Games
+@ttt_app.route('/listgames', methods=['GET', 'POST'])
+def list_games():
+    return {"status":"OK", "games":[]}
+
+@ttt_app.route('/getgame', methods=["GET", "POST"])
+def get_game():
+    pass
+
+@ttt_app.route('/getscore', methods=['GET', 'POST'])
+def get_score():
+    pass
 
 # Logout
 @ttt_app.route('/logout', methods=['GET', 'POST'])
