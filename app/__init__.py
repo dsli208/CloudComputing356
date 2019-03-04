@@ -284,7 +284,9 @@ def board():
             return jsonify(ttt_props)
 
         if ttt_props['grid'][request.json['move']] != ' ':
-            return jsonify({"status": "ERROR"})
+            jify = jsonify(ttt_props)
+            print(jify)
+            return jify
 
         ttt_props['grid'][request.json['move']] = 'X'
         # ttt_props['grid'] = request.json['grid']
