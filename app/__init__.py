@@ -103,7 +103,7 @@ def get_game():
 
     for g in user_games:
         if g['id'] == id:
-            return jsonify({"status":"OK", "grid": g['props']['grid'], "winner":g['props']['winner']})
+            return jsonify({"status":"OK"}) #, "grid": g['props']['grid'], "winner":g['props']['winner']
 
     return jsonify({"status":"ERROR"})
 
@@ -298,7 +298,7 @@ def board():
             username = session['username']
             game_info_db = games.find_one({"username": username})
             start_date = time.strftime("%Y-%m-%d", time.gmtime())
-            saved_game_data = {"id":game_info_db['id'], "start_date": start_date, "props":ttt_props}
+            saved_game_data = {"id":game_info_db['id'], "start_date": start_date} # put props key in here?
             # Append game data to past games array
             game_info_db['game_list'].append(saved_game_data)
             # Update ID
@@ -322,7 +322,7 @@ def board():
                 username = session['username']
                 game_info_db = games.find_one({"username": username})
                 start_date = time.strftime("%Y-%m-%d", time.gmtime())
-                saved_game_data = {"id": game_info_db['id'], "start_date": start_date, "props":ttt_props}
+                saved_game_data = {"id": game_info_db['id'], "start_date": start_date} # put props key in here?
                 # Append game data to past games array
                 game_info_db['game_list'].append(saved_game_data)
                 # Update ID
