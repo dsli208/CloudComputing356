@@ -278,12 +278,14 @@ def board():
 
         # Handle NoneType move case
         if request.json['move'] is None:
+            print("NoneType move detected")
             ttt_props['winner'] = ' '
             ttt_props['status'] = 'OK'
             print(ttt_props)
             return jsonify(ttt_props)
 
         if ttt_props['grid'][request.json['move']] != ' ':
+            print("Space is already taken")
             jify = jsonify(ttt_props)
             print(jify)
             return jify
@@ -291,6 +293,7 @@ def board():
         ttt_props['grid'][request.json['move']] = 'X'
         # ttt_props['grid'] = request.json['grid']
         if is_winner('X') and ttt_props['winner'] == ' ':
+            print("X wins")
             # Mark X as the winner and prepare the winner file (ttt_props)
             ttt_props['winner'] = 'X'
             ttt_grid = json.dumps(ttt_props)
@@ -317,6 +320,7 @@ def board():
         else:
             computer_play()
             if is_winner('O') and ttt_props['winner'] == ' ':
+                print("Computer wins")
                 ttt_props['winner'] = 'O'
     #            ttt_grid = json.dumps(ttt_props)
                 print(ttt_props)
@@ -339,12 +343,14 @@ def board():
                 print(jify)
                 return jify
             else:
+                print("On to the next set of turns")
                 ttt_grid = json.dumps(ttt_props)
                 print(ttt_props)
                 jify = jsonify(ttt_props)
                 print(jify)
                 return jify
     else:
+        print("/ttt/play GET request")
         ttt_grid = json.dumps(ttt_props)
         jify = jsonify(ttt_props)
         return jify
