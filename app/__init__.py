@@ -86,6 +86,11 @@ def list_games():
 
 @ttt_app.route('/getgame', methods=["GET", "POST"])
 def get_game():
+    if 'username' not in session:
+        print("Nobody Logged In")
+        return jsonify({"status": "ERROR"})
+
+    username = session['username']
     form = request.json
     print(form)
     if not 'id' in form:
@@ -93,6 +98,14 @@ def get_game():
         return jsonify({"status":"ERROR"})
 
     id = form['id']
+    user = games.find_one({"username":username})
+    user_games = user['game_list']
+
+    for g in user_games:
+        if g['id'] == id:
+            return jsonify({"status":"OK", "grid": g['props']['grid'], "winner":g['props']['winner']})
+
+    return jsonify({"status":"ERROR"})
 
 @ttt_app.route('/getscore', methods=['GET', 'POST'])
 def get_score():
@@ -285,7 +298,7 @@ def board():
             username = session['username']
             game_info_db = games.find_one({"username": username})
             start_date = time.strftime("%Y-%m-%d", time.gmtime())
-            saved_game_data = {"id":game_info_db['id'], "start_date": start_date}
+            saved_game_data = {"id":game_info_db['id'], "start_date": start_date, "props":ttt_props}
             # Append game data to past games array
             game_info_db['game_list'].append(saved_game_data)
             # Update ID
@@ -309,7 +322,7 @@ def board():
                 username = session['username']
                 game_info_db = games.find_one({"username": username})
                 start_date = time.strftime("%Y-%m-%d", time.gmtime())
-                saved_game_data = {"id": game_info_db['id'], "start_date": start_date}
+                saved_game_data = {"id": game_info_db['id'], "start_date": start_date, "props":ttt_props}
                 # Append game data to past games array
                 game_info_db['game_list'].append(saved_game_data)
                 # Update ID
