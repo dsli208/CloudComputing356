@@ -109,7 +109,24 @@ def get_game():
 
 @ttt_app.route('/getscore', methods=['GET', 'POST'])
 def get_score():
-    pass
+    if 'username' not in session:
+        print("Nobody Logged In")
+        return jsonify({"status": "ERROR"})
+
+    username = session['username']
+    user = games.find_one({"username": username})
+    user_games = user['game_list']
+
+    x_win = 0
+    o_win = 0
+    ties = 0
+    for g in user_games:
+        if g['props']['winner'] == 'X':
+            x_win += 1
+        elif g['props']['winner'] == 'O':
+            o_win += 1
+
+    return jsonify({"status":"OK", "human":x_win, "wopr":o_win, "tie":ties})
 
 # Logout
 @ttt_app.route('/logout', methods=['GET', 'POST'])
